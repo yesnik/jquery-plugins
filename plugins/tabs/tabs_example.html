@@ -9,7 +9,18 @@
   <script type="text/javascript" src="tabs.jquery.js"></script>
   <script type="text/javascript">
   $(function () {
-    $('#tabs').tabs('#tabsContent');
+    var $tabs = $('#tabs');
+    //Apply tabs.jquery plugin
+    $tabs.tabs('#tabsContent');
+
+    //Make connection between url's hash and tab
+    $tabs.on('change.tabs', function (e, tabName) {
+      window.location.hash = tabName;
+    });
+    $(window).on('hashchange', function () {
+      var tabName = window.location.hash.slice(1);
+      $('#tabs').trigger('change.tabs', tabName);
+    });
   });
   </script>
 </head>
